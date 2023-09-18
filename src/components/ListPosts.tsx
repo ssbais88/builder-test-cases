@@ -54,7 +54,6 @@ export class ListPosts extends React.Component<
 
   selectRow = (row: PostData) => {
     this.setState({});
-    console.log(row);
   };
 
   deletePost = (row: PostData) => {
@@ -65,7 +64,6 @@ export class ListPosts extends React.Component<
   };
 
   ediPost = (row: PostData) => {
-    console.log(row);
     this.setState({
       updateRow: row,
       isEdit: true,
@@ -78,7 +76,7 @@ export class ListPosts extends React.Component<
   };
 
   handleOpen = () => this.setState({ open: true });
-  handleClose = () => this.setState({ open: false });
+  handleClose = () => this.setState({ open: false, updateRow: {} });
 
   showCreateForm = () => {
     this.setState({
@@ -89,6 +87,8 @@ export class ListPosts extends React.Component<
   handleClosePostForm = () => {
     this.setState({
       showForm: false,
+      isEdit: false,
+      updateRow: {},
     });
   };
 
@@ -106,8 +106,7 @@ export class ListPosts extends React.Component<
           description: e.target.description.value,
         }),
       });
-      const content = await rawResponse.json();
-      console.log(content);
+      await rawResponse.json();
       this.setState({
         showForm: false,
       });
@@ -126,7 +125,10 @@ export class ListPosts extends React.Component<
           isEdit={this.state.isEdit}
           getUpdateData={this.getUpdateData}
         />
-        <TableHeader showCreateForm={() => this.showCreateForm()} />
+        <TableHeader
+          showCreateForm={() => this.showCreateForm()}
+          data-test-id="tableHeader"
+        />
         <TableModal
           open={this.state.open}
           modalHeader="Delete"
@@ -163,18 +165,22 @@ export class ListPosts extends React.Component<
                     </Button>
                   </TableCell>
                   <TableCell>
-                    <Button color="inherit" onClick={() => this.ediPost(row)}>
+                    <Button
+                      color="inherit"
+                      onClick={() => this.ediPost(row)}
+                      data-test-id="edit-post"
+                    >
                       <EditIcon />
                     </Button>
                   </TableCell>
-                  <TableCell component="th" scope="row">
+                  <TableCell component="th" scope="row" data-test-id="id">
                     {row.id}
                   </TableCell>
-                  <TableCell component="th" scope="row">
+                  <TableCell component="th" scope="row" data-test-id="uid">
                     {row.userId}
                   </TableCell>
-                  <TableCell>{row.title}</TableCell>
-                  <TableCell>{row.body}</TableCell>
+                  <TableCell data-test-id="title">{row.title}</TableCell>
+                  <TableCell data-test-id="body">{row.body}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

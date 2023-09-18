@@ -54,10 +54,15 @@ export class TableModal extends React.Component<
                 id="transition-modal-title"
                 variant="h6"
                 component="h2"
+                data-test-id="deleteTitle"
               >
                 {this.props.modalHeader}
               </Typography>
-              <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+              <Typography
+                id="transition-modal-description"
+                sx={{ mt: 2 }}
+                data-test-id="deleteDesc"
+              >
                 {this.props.modalDescription}
               </Typography>
             </Box>

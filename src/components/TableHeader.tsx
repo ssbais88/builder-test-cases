@@ -21,6 +21,7 @@ export class TableHeader extends React.Component<
               color="inherit"
               variant="outlined"
               onClick={() => this.props.showCreateForm()}
+              data-test-id='btnAddPost'
             >
               Add Post
             </Button>

@@ -34,10 +34,8 @@ export class CreatePostModal extends React.Component<
   }
 
   componentDidUpdate(prevProps: any) {
-    console.log(this.props);
     if (this.props.isEdit != prevProps.isEdit) {
       const resp = this.props.getUpdateData();
-      console.log("RESPONSE ", resp);
       this.setState({
         title: resp.title,
         description: resp.body,
@@ -45,7 +43,20 @@ export class CreatePostModal extends React.Component<
     }
   }
 
-  componentDidMount(): void {}
+  resetForm() {
+    this.setState({
+      title: "",
+      description: "",
+    });
+  }
+
+  componentDidMount(): void {
+    const resp = this.props.getUpdateData();
+    this.setState({
+      title: resp.title,
+      description: resp.body,
+    });
+  }
   render() {
     return (
       <div>
@@ -53,7 +64,10 @@ export class CreatePostModal extends React.Component<
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
           open={this.props.open}
-          onClose={this.props.handleClose}
+          onClose={() => {
+            this.props.handleClose();
+            this.resetForm();
+          }}
           closeAfterTransition
           slots={{ backdrop: Backdrop }}
           slotProps={{
@@ -61,12 +75,17 @@ export class CreatePostModal extends React.Component<
               timeout: 500,
             },
           }}
+          data-test-id="postModal"
         >
           <Fade in={this.props.open}>
-            <Box sx={style}>
+            <Box sx={style} data-test-id="postModalContent">
               <form
                 className="container"
-                onSubmit={(e) => this.props.submitForm(e)}
+                onSubmit={(e) => {
+                  this.props.submitForm(e);
+                  this.resetForm();
+                }}
+                data-test-id="postForm"
               >
                 <input
                   name="title"
@@ -74,6 +93,13 @@ export class CreatePostModal extends React.Component<
                   id="title"
                   type="text"
                   value={this.state.title}
+                  onChange={(event) => {
+                    this.setState(() => {
+                      return {
+                        title: event.target.value,
+                      };
+                    });
+                  }}
                 />
                 <input
                   name="description"
@@ -81,6 +107,11 @@ export class CreatePostModal extends React.Component<
                   id="description"
                   type="text"
                   value={this.state.description}
+                  onChange={(event) => {
+                    this.setState({
+                      description: event.target.value,
+                    });
+                  }}
                 />
                 <button type="submit" className="btn #673ab7 deep-purple">
                   Save Post
