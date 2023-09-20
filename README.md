@@ -1,3 +1,18 @@
+## Commands
+
+# Command to run project
+
+`npm run dev`
+
+# Command to run test
+
+`npm run test`
+
+# Preffered versions
+
+-Node: v18.13.0
+-Npm: v8.19.3
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
