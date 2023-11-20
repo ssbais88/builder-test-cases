@@ -40,6 +40,7 @@ export class TableModal extends React.Component<
           aria-describedby="transition-modal-description"
           open={this.props.open}
           onClose={this.props.handleClose}
+          data-test-id="deleteModal"
           closeAfterTransition
           slots={{ backdrop: Backdrop }}
           slotProps={{

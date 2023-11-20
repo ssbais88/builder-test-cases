@@ -678,6 +678,15 @@ test("I can Add the record", async () => {
   waitFor(() => {
     const addPost = screen.getByTestId("btnAddPost");
     fireEvent.click(addPost);
+
+    const closeModal = screen.getByTestId("postModal");
+    act(() =>
+      fireEvent.keyDown(closeModal, {
+        key: "Escape",
+        code: "Escape",
+        charCode: 27,
+      })
+    );
   });
 });
 
@@ -689,6 +698,15 @@ test("I can Delete the record", async () => {
   await waitFor(() => {
     const deleteBtn = screen.getByTestId("delete-post-1");
     fireEvent.click(deleteBtn);
+
+    const closeModal = screen.getByTestId("deleteModal");
+    act(() =>
+      fireEvent.keyDown(closeModal, {
+        key: "Escape",
+        code: "Escape",
+        charCode: 27,
+      })
+    );
   });
 });
 
